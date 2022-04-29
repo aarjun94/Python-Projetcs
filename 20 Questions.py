@@ -21,10 +21,6 @@ mediumTree = \
 yes_prompts = ["yes", "yep", "sure", "yup", "y", "yas"]
 
 def main():
-    """DOCSTRING!"""
-    # Write the "main" function for 20 Questions here.  Although
-    # main() is traditionally placed at the top of a file, it is the
-    # last function you will write.
 
     print("Welcome to 20 Questions Game!")
     tree = smallTree
@@ -46,7 +42,7 @@ def main():
 
 def simplePlay(tree):
     """DOCSTRING!"""
-    # print("ygyb", tree, "blahblah", type(tree), "\n")
+
     answer, yes_res, no = tree
 
     if isLeaf(tree):
