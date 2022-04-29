@@ -5,15 +5,9 @@ import matplotlib.pyplot as plt
 from IPython import display
 import time
 
-random.seed(32) # for reproducible random numbers
+random.seed(32)
 
-#####################
-### DO THIS FIRST ###
-#####################
 
-# replace each pass statement with the appropriate code
-# make sure to add New_List_of_Agents (line 41)
-# fill it in or copy the code from lab
 
 class Agent():
     def __init__(self, xlocation, ylocation):
@@ -24,8 +18,8 @@ agent1 = Agent(22, 55)
 agent2 = Agent(66, 88)
 
 def map_all_agents(listofagents):
-    agents_XCoordinate = [] # this is an empty list that will store our X-coordinates, don't change this command
-    agents_YCoordinate = [] # this is an empty list that will store our y-coordinates, don't change this command
+    agents_XCoordinate = [] 
+    agents_YCoordinate = [] 
     
     for item in listofagents:
       agents_XCoordinate.append(item.x)
@@ -62,20 +56,11 @@ class AgentNew(Agent):
         self.status = status 
 
 
-#############################
-### THIS IS YOUR HOMEWORK ###
-#############################
 
-'''Problem #1'''
 
 # The class AgentNew randomly picks whether an agent will be purple or gold.
 # We may want to specify that instead, so lets create two subclasses of AgentNew.
 # Let's call them PurpleAgents and GoldAgents.
-# Below is flawed code for the subclass PurpleAgents.
-# You can fix it simply by deleting/editing the mistakes I have made.
-# You don't have to add any new lines.
-# Once it's fixed, go ahead and create an analogous subclass called GoldAgents,
-# which has the default group="Gold".
 
 class PurpleAgents(AgentNew):
         def __init__(self, xlocation, ylocation, group="Purple", status="unhappy"):
@@ -95,11 +80,6 @@ class GoldAgents(AgentNew):
 b2 = GoldAgents(3,6)
 print(b2.group)
 
-'''Problem #2'''
-
-# Let's test our new classes and see if they work.
-# If you complete the code below you should get a figure that looks like Plot7
-# in the pdf.
 
 random.seed(15)
 List_of_PurpleAgents = [PurpleAgents(random.randint(0,100), random.randint(0,100)) for x in range(12)]  ### using list comprehension, make 12 PurpleAgents
@@ -126,10 +106,8 @@ x = map_colorful_agents(Combined_List)
 ### call the function appropriately
 
 
-'''Problem #3'''
 
-# Now that we have some agents of different groups, let's go back and add a
-# method to AgentNew that allows agents to move if they are unhappy.
+# Now that we have some agents of different groups
 
 random.seed(38)
 class AgentNew(Agent):
@@ -145,9 +123,6 @@ class AgentNew(Agent):
 
 a55 = AgentNew(24,11,"Purple")
 
-a55.move_if_unhappy() ### there is something wrong with this command - fix it
-
-print(a55.x) ### if your class is set up right the printed answer should be 81 (not 24)
 
 
 '''Problem #4'''
@@ -157,9 +132,6 @@ print(a55.x) ### if your class is set up right the printed answer should be 81 (
 # the agents that are within 10 x-coordinate AND 10 y-coordinate spaces of a
 # given agent. Once those agents are identified, we'll calculate if enough of
 # them are of the same group to meet our pre-determined threshold.
-# MAKE SURE TO USE A LAMBDA FUNCTION WHERE INDICATED.
-# MAKE SURE TO USE LIST COMPREHENSIONS WHERE INDICATED.
-# Fill in the code below.
 
 class AgentNew(Agent):
     def __init__(self, xlocation, ylocation, group, status='unhappy'):
@@ -173,38 +145,15 @@ class AgentNew(Agent):
             self.x = random.randint(0,100)
             self.y = random.randint(0,100)
 
-    def check_neighbors(self, agentlist):  # note this method needs not only the self attributes - it also needs a list of agents
-        zlist = list(filter(lambda t: abs(t.x - self.x) <10, agentlist))### here, use a filter and a lambda function to find all agents in a list who are within 10 spaces in the X direction of the agent that is calling the method
-        zlist = list(filter(lambda t: abs(t.y - self.y) <10, zlist))### do the same thing now to filter for agents within 10 spaces in the y direction - what list do you want to apply this lambda function to?
-        same_group_neighbor = [t for t in zlist if t.group == self.group]### use list comprehension to only keep members of zlist who are of the same group as this agent
-        opposite_group_neighbor = [t for t in zlist if t.group != self.group] ### use list comprehension to only keep members of zlist who are of the opposite group as this agent
-        #print(len(same_group_neighbor), "same group neighbors, and ", len(zlist), " total neibhors" ) # this is commented out but you can use this as a diagnostic to make sure its working
-        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold: # this command works; it checks the percentage of same group neighbors against some threshold to determine the agents happiness
+    def check_neighbors(self, agentlist): 
+        zlist = list(filter(lambda t: abs(t.x - self.x) <10, agentlist))
+        zlist = list(filter(lambda t: abs(t.y - self.y) <10, zlist))
+        same_group_neighbor = [t for t in zlist if t.group == self.group]
+        opposite_group_neighbor = [t for t in zlist if t.group != self.group] 
+        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold:
             self.status="happy"
         else:
             self.status="unhappy"
-
-# class PurpleAgents(AgentNew):
-#         def __init__(self, xlocation, ylocation, group="Purple", status="unhappy"):
-#             super().__init__(xlocation, ylocation, group)
-#             self.group = group
-#             self.status = status
-
-#         def move_if_unhappy(self):
-#             return super().move_if_unhappy()
-#         def check_neighbors(self, agentlist):
-#             return super().check_neighbors(agentlist)
-
-# class GoldAgents(AgentNew):
-#         def __init__(self, xlocation, ylocation, group="Gold", status="unhappy"):
-#             super().__init__(xlocation, ylocation, group)
-#             self.group = group
-#             self.status = status
-
-#         def move_if_unhappy(self):
-#             return super().move_if_unhappy()
-#         def check_neighbors(self, agentlist):
-#             return super().check_neighbors(agentlist)
 
 
 class PurpleAgents(AgentNew):
@@ -231,12 +180,7 @@ class GoldAgents(AgentNew):
         def check_neighbors(self, agentlist):
             return super().check_neighbors(agentlist)
 
-'''Problem #5'''
 
-# Now that you've added some methods to the class AgentNew, can you call them
-# from the child class? Why or why not?
-# Test the code below and find out. If necessary, add some code to make those
-# methods available to objects from the classes PurpleAgents and GoldAgents.
 
 random.seed(34)
 p32 = PurpleAgents(14,55)
@@ -244,7 +188,6 @@ p32.move_if_unhappy()
 print(p32.x)  # what do you expect the output to be?
 
 
-'''Problem #6a'''
 
 # Now we're ready to put it all together and run a few simulations.
 # First, let's run a simulation in which there are 200 Purple agents and
@@ -252,9 +195,6 @@ print(p32.x)  # what do you expect the output to be?
 # Notice the group_affinity_threshold is set at .51.
 # This means each purple or gold agent wants to be in a 'block' in which they
 # are in the majority group.
-# What happens after 15 turns?
-# To make sure you're running this simulation correctly, test against Plot8
-# and Plot9 in the pdf.
 
 random.seed(2021)
 group_affinity_threshold = .51
@@ -272,11 +212,6 @@ for x in range(15):
     display.clear_output(wait=True)
 
 
-'''Problem #6b'''
-
-# What happens if we run it again but with a threshold of only 0.4?
-# Let's run this simulation with 400 of each type of agent.
-# Modify the code below to test it out.
 
 random.seed(202)
 group_affinity_threshold = .4
@@ -299,8 +234,8 @@ for x in range(15):
 # such as this were used to argue that some degree of segregation was
 # inevitable, and therefore it should not be a target of policy.
 
-# Let's challenge that assumption.
-# Make 2 new subclasses, 'PurpleDiversitySeekers' and 'GoldDiversitySeekers'.
+
+# Lets make 2 new subclasses, 'PurpleDiversitySeekers' and 'GoldDiversitySeekers'.
 # Please use those exact names to allow for autograding.
 # For these subclasses, make them seek out diversity instead of avoid it.
 # Run some simulations with 300 traditional PurpleAgents, 300 traditional
@@ -321,13 +256,12 @@ class PurpleDiversitySeekers(Agent):
             self.x = random.randint(0,100)
             self.y = random.randint(0,100)
 
-    def check_neighbors(self, agentlist):  # note this method needs not only the self attributes - it also needs a list of agents
-        zlist = list(filter(lambda x: abs(x.x - self.x) <10, agentlist))### here, use a filter and a lambda function to find all agents in a list who are within 10 spaces in the X direction of the agent that is calling the method
-        zlist = list(filter(lambda x: abs(x.y - self.y) <10, zlist))### do the same thing now to filter for agents within 10 spaces in the y direction - what list do you want to apply this lambda function to?
-        same_group_neighbor = [t for t in zlist if t.group != self.group]### use list comprehension to only keep members of zlist who are of the same group as this agent
-        opposite_group_neighbor = [t for t in zlist if t.group == self.group] ### use list comprehension to only keep members of zlist who are of the opposite group as this agent
-        #print(len(same_group_neighbor), "same group neighbors, and ", len(zlist), " total neibhors" ) # this is commented out but you can use this as a diagnostic to make sure its working
-        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold: # this command works; it checks the percentage of same group neighbors against some threshold to determine the agents happiness
+    def check_neighbors(self, agentlist): 
+        zlist = list(filter(lambda x: abs(x.x - self.x) <10, agentlist))
+        zlist = list(filter(lambda x: abs(x.y - self.y) <10, zlist))
+        same_group_neighbor = [t for t in zlist if t.group != self.group]
+        opposite_group_neighbor = [t for t in zlist if t.group == self.group] 
+        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold: 
             self.status="happy"
         else:
             self.status="unhappy"
@@ -344,13 +278,13 @@ class GoldDiversitySeekers(Agent):
             self.x = random.randint(0,100)
             self.y = random.randint(0,100)
 
-    def check_neighbors(self, agentlist):  # note this method needs not only the self attributes - it also needs a list of agents
-        zlist = list(filter(lambda x: abs(x.x - self.x) <10, agentlist))### here, use a filter and a lambda function to find all agents in a list who are within 10 spaces in the X direction of the agent that is calling the method
-        zlist = list(filter(lambda x: abs(x.y - self.y) <10, zlist))### do the same thing now to filter for agents within 10 spaces in the y direction - what list do you want to apply this lambda function to?
-        same_group_neighbor = [t for t in zlist if t.group != self.group]### use list comprehension to only keep members of zlist who are of the same group as this agent
-        opposite_group_neighbor = [t for t in zlist if t.group == self.group] ### use list comprehension to only keep members of zlist who are of the opposite group as this agent
-        #print(len(same_group_neighbor), "same group neighbors, and ", len(zlist), " total neibhors" ) # this is commented out but you can use this as a diagnostic to make sure its working
-        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold: # this command works; it checks the percentage of same group neighbors against some threshold to determine the agents happiness
+    def check_neighbors(self, agentlist):  
+        zlist = list(filter(lambda x: abs(x.x - self.x) <10, agentlist))
+        zlist = list(filter(lambda x: abs(x.y - self.y) <10, zlist))
+        same_group_neighbor = [t for t in zlist if t.group != self.group]
+        opposite_group_neighbor = [t for t in zlist if t.group == self.group] 
+       
+        if (len(same_group_neighbor)+.01)/(len(zlist)+.01) > group_affinity_threshold: 
             self.status="happy"
         else:
             self.status="unhappy"
@@ -360,13 +294,12 @@ testlist = [AgentNew(random.randint(0,100), random.randint(0,100), group='Purple
 map_colorful_agents(testlist)
 for x in range(15):
     for agent in (testlist):
-        agent.check_neighbors(testlist)  #does this need any arguments?
+        agent.check_neighbors(testlist) 
     for agent in (testlist):
-        agent.move_if_unhappy() # does this need any arguments?
+        agent.move_if_unhappy() 
     map_colorful_agents(testlist)
     print(x)
     time.sleep(.5)
     display.clear_output(wait=True)
 
 
-### use this space to run the additional simulations
